@@ -4,9 +4,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-/**
- * Utility: alternating caps reverse
- */
 function alternatingCapsReverse(str) {
   let reversed = str.split("").reverse();
   return reversed
@@ -14,9 +11,6 @@ function alternatingCapsReverse(str) {
     .join("");
 }
 
-/**
- * API: POST /bfhl
- */
 app.post("/bfhl", (req, res) => {
   try {
     const { data } = req.body;
@@ -28,8 +22,7 @@ app.post("/bfhl", (req, res) => {
       });
     }
 
-    // Custom details (replace with your actual info)
-    const full_name = "john_doe"; // lowercase
+    const full_name = "john_doe"; 
     const dob = "17091999";
     const email = "john@xyz.com";
     const roll_number = "ABCD123";
@@ -57,7 +50,6 @@ app.post("/bfhl", (req, res) => {
       }
     });
 
-    // Concatenation logic
     let concatString = alternatingCapsReverse(
       alphabets.join("").toLowerCase()
     );
@@ -82,10 +74,9 @@ app.post("/bfhl", (req, res) => {
   }
 });
 
-// Export app (for Vercel/Render compatibility)
 module.exports = app;
 
-// Localhost runner
+
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,20 +1,28 @@
-module.exports = (req, res) => {
-  if (req.method !== "POST") {
-    return res.status(405).json({ is_success: false, message: "Method not allowed" });
-  }
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
 
+app.use(bodyParser.json());
+
+function alternatingCapsReverse(str) {
+  let reversed = str.split("").reverse();
+  return reversed
+    .map((ch, idx) => (idx % 2 === 0 ? ch.toUpperCase() : ch.toLowerCase()))
+    .join("");
+}
+
+app.post("/bfhl", (req, res) => {
   try {
     const { data } = req.body;
 
     if (!Array.isArray(data)) {
       return res.status(400).json({
         is_success: false,
-        message: "Invalid input. 'data' should be an array."
+        message: "Invalid input. 'data' should be an array.",
       });
     }
 
-    // Custom details
-    const full_name = "john_doe"; // lowercase
+    const full_name = "john_doe"; 
     const dob = "17091999";
     const email = "john@xyz.com";
     const roll_number = "ABCD123";
@@ -41,13 +49,26 @@ module.exports = (req, res) => {
       }
     });
 
-    // Alternating caps reverse
-    let concatString = alphabets
-      .join("")
-      .split("")
-      .reverse()
-      .map((ch, idx) => (idx % 2 === 0 ? ch.toUpperCase() : ch.toLowerCase()))
-      .join("");
+    // ✅ Unified concat_string logic
+    let concatString = "";
+    if (alphabets.length === 2) {
+      concatString =
+        alphabets[1].charAt(0).toUpperCase() +
+        alphabets[0].charAt(0).toLowerCase();
+    } else if (alphabets.length === 3) {
+      const first = alphabets[0];
+      const middle = alphabets[1];
+      const last = alphabets[2];
+      const midChar = middle.charAt(Math.floor(middle.length / 2));
+      concatString =
+        last.charAt(0).toUpperCase() +
+        midChar.toLowerCase() +
+        first.charAt(0).toUpperCase();
+    } else {
+      concatString = alternatingCapsReverse(
+        alphabets.join("").toLowerCase()
+      );
+    }
 
     return res.status(200).json({
       is_success: true,
@@ -59,12 +80,19 @@ module.exports = (req, res) => {
       alphabets,
       special_characters,
       sum: sum.toString(),
-      concat_string: concatString
+      concat_string: concatString,
     });
   } catch (err) {
     return res.status(500).json({
       is_success: false,
-      message: "Internal Server Error"
+      message: "Internal Server Error",
     });
   }
-};
+});
+
+module.exports = app;
+
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
