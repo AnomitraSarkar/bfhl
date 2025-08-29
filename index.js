@@ -22,10 +22,10 @@ app.post("/bfhl", (req, res) => {
       });
     }
 
-    const full_name = "john_doe"; 
-    const dob = "17091999";
-    const email = "john@xyz.com";
-    const roll_number = "ABCD123";
+    const full_name = "anomitra_sarkar"; 
+    const dob = "24102004";
+    const email = "anomitra.sarkar2022@vitstudent.ac.in";
+    const roll_number = "22bce1382";
 
     let even_numbers = [];
     let odd_numbers = [];
