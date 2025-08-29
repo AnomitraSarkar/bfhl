@@ -49,7 +49,6 @@ app.post("/bfhl", (req, res) => {
       }
     });
 
-    // ✅ Unified concat_string logic
     let concatString = "";
     if (alphabets.length === 2) {
       concatString =

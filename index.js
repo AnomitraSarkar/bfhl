@@ -35,7 +35,6 @@ app.post("/bfhl", (req, res) => {
 
     data.forEach((item) => {
       if (/^-?\d+$/.test(item)) {
-        // is number
         let num = parseInt(item, 10);
         sum += num;
         if (num % 2 === 0) {
