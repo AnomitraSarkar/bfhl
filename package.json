@@ -1,7 +1,7 @@
 {
   "name": "bfhl-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "bfhl-api endpoint",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
